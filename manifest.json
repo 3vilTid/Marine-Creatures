@@ -1,7 +1,7 @@
 {
   "name": "Marine creatures of Sumba",
   "short_name": "Creatures",
-  "description": "Catalogue web application for managing and browsing items",
+  "description": "This application is made as a tool for the identification of marine species of sumba",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
