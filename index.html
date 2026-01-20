@@ -5185,7 +5185,7 @@ DETECTION SYSTEM (working correctly):
       }
 
       .diaporama-bottom {
-        font-size: 13px;
+        font-size: 11px; /* Smaller than Long text Up (13px) */
         margin-top: 10px;
         word-wrap: break-word;
         overflow-wrap: break-word;
@@ -5337,14 +5337,17 @@ DETECTION SYSTEM (working correctly):
       }
 
       body.mobile-device.landscape .diaporama-bottom {
-        font-size: 16px !important;
+        font-size: 12px !important;
       }
 
       body.mobile-device.landscape .diaporama-field,
       body.mobile-device.landscape .diaporama-field-label,
-      body.mobile-device.landscape .diaporama-longtext-up,
-      body.mobile-device.landscape .diaporama-longtext-down {
+      body.mobile-device.landscape .diaporama-longtext-up {
         font-size: 15px !important;
+      }
+
+      body.mobile-device.landscape .diaporama-longtext-down {
+        font-size: 12px !important; /* Match Bottom font size */
       }
 
       /* Hide nav buttons on mobile/tablet - use swipe instead */
@@ -5384,6 +5387,7 @@ DETECTION SYSTEM (working correctly):
         max-width: 100% !important;
         max-height: none !important;
         overflow: visible !important;
+        gap: 8px !important; /* Consistent gap X between all child sections */
       }
 
       /* Portrait mode: same natural flow behavior */
@@ -5428,14 +5432,17 @@ DETECTION SYSTEM (working correctly):
       }
 
       body.tablet-device.landscape .diaporama-bottom {
-        font-size: 17px !important;
+        font-size: 12px !important;
       }
 
       body.tablet-device.landscape .diaporama-field,
       body.tablet-device.landscape .diaporama-field-label,
-      body.tablet-device.landscape .diaporama-longtext-up,
-      body.tablet-device.landscape .diaporama-longtext-down {
+      body.tablet-device.landscape .diaporama-longtext-up {
         font-size: 15px !important;
+      }
+
+      body.tablet-device.landscape .diaporama-longtext-down {
+        font-size: 12px !important; /* Match Bottom font size */
       }
 
       /* ==================== NEW: DIAPORAMA - LANDSCAPE TWO-COLUMN LAYOUT (All Devices + Desktop) ====================
@@ -5542,6 +5549,10 @@ DETECTION SYSTEM (working correctly):
         margin: 0 !important;
       }
 
+      body.desktop-device .diaporama-longtext-down {
+        font-size: 11px; /* Match Bottom font size */
+      }
+
       /* Right column wrapper - contains scroll-up-2 and scroll-down-1, scrolls when content exceeds left column height */
       /* Has 10px separator border */
       body.mobile-device.landscape .diaporama-right-column,
@@ -5613,10 +5624,6 @@ DETECTION SYSTEM (working correctly):
 
       body.mobile-device.portrait .diaporama-topcorner {
         font-size: 31.25px !important;
-      }
-
-      body.mobile-device.portrait .diaporama-longtext-down-wrapper {
-        margin-bottom: 20px !important;
       }
 
       body.mobile-device.portrait .diaporama-bottom {
@@ -5692,10 +5699,6 @@ DETECTION SYSTEM (working correctly):
         font-size: 25px !important;
       }
 
-      body.tablet-device.portrait .diaporama-longtext-down-wrapper {
-        margin-bottom: 20px !important;
-      }
-
       body.tablet-device.portrait .diaporama-bottom {
         font-size: 25px !important;
         text-align: left !important;
@@ -5767,10 +5770,6 @@ DETECTION SYSTEM (working correctly):
 
       html.github-pages body.mobile-device.portrait .diaporama-topcorner {
         font-size: 15.625px !important;
-      }
-
-      html.github-pages body.mobile-device.portrait .diaporama-longtext-down-wrapper {
-        margin-bottom: 10px !important;
       }
 
       html.github-pages body.mobile-device.portrait .diaporama-bottom {
@@ -5875,6 +5874,7 @@ DETECTION SYSTEM (working correctly):
         max-width: 100% !important;
         max-height: none !important;
         overflow: visible !important;
+        gap: 4px !important; /* Consistent gap X between all child sections (50% scaled) */
       }
 
       /* GitHub Pages Horizontal mode: container with natural flow - no centering */
@@ -5890,17 +5890,6 @@ DETECTION SYSTEM (working correctly):
       /* GitHub Pages Mobile Portrait: Set margin between SubId1 and Long text Up to 4px */
       html.github-pages body.mobile-device.portrait .diaporama-scroll-up-1 {
         margin-bottom: 4px !important;
-      }
-
-      /* GitHub Pages Mobile Portrait: Natural margins for image and text */
-      html.github-pages body.mobile-device.portrait .diaporama-image-wrapper {
-        margin: 4px 0 !important;
-      }
-      html.github-pages body.mobile-device.portrait .diaporama-scroll-up-2 {
-        margin-bottom: 4px !important;
-      }
-      html.github-pages body.mobile-device.portrait .diaporama-longtext-down-wrapper {
-        margin-top: 4px !important;
       }
 
       /* Mobile/Tablet LANDSCAPE: Natural document flow - page scrolls if content exceeds viewport */
@@ -5951,7 +5940,7 @@ DETECTION SYSTEM (working correctly):
     <!-- Loading Screen Overlay -->
     <div id="loadingScreen" class="loading-screen">
       <div class="loading-content">
-        <div id="loadingText" class="loading-text">Patience you must have, young Padawan !</div>
+        <div id="loadingText" class="loading-text">Loading !</div>
         <div class="loading-spinner-container">
           <div class="loading-spinner"></div>
         </div>
