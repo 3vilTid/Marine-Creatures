@@ -5615,8 +5615,51 @@ DETECTION SYSTEM (working correctly):
         font-size: 31.25px !important;
       }
 
+      body.mobile-device.portrait .diaporama-longtext-down-wrapper {
+        margin-bottom: 20px !important;
+      }
+
       body.mobile-device.portrait .diaporama-bottom {
         font-size: 25px !important;
+        text-align: left !important;
+      }
+
+      body.mobile-device.portrait .diaporama-bottom-text {
+        text-align: left !important;
+      }
+
+      body.mobile-device.portrait .diaporama-scroll-up-2,
+      body.mobile-device.portrait .diaporama-longtext-up {
+        text-align: left !important;
+      }
+
+      /* Portrait mode: Use CSS order to arrange vertical flow correctly */
+      body.mobile-device.portrait .diaporama-right-column {
+        display: contents !important; /* Collapse wrapper so children become direct flex items */
+      }
+
+      body.mobile-device.portrait .diaporama-scroll-up-1 {
+        order: 1; /* SubId1 + TopCorner */
+      }
+
+      body.mobile-device.portrait .diaporama-scroll-up-2 {
+        order: 2; /* Long text Up - above image */
+      }
+
+      body.mobile-device.portrait .diaporama-image-wrapper {
+        order: 3; /* Image */
+      }
+
+      body.mobile-device.portrait .diaporama-longtext-down-wrapper {
+        order: 4; /* Long text Down (caption) */
+      }
+
+      body.mobile-device.portrait .diaporama-scroll-down-1 {
+        order: 5; /* Bottom */
+      }
+
+      body.mobile-device.portrait .diaporama-scroll-down-2 {
+        order: 6; /* SubId2 */
       }
 
       body.mobile-device.portrait .diaporama-field,
@@ -5649,8 +5692,51 @@ DETECTION SYSTEM (working correctly):
         font-size: 25px !important;
       }
 
+      body.tablet-device.portrait .diaporama-longtext-down-wrapper {
+        margin-bottom: 20px !important;
+      }
+
       body.tablet-device.portrait .diaporama-bottom {
         font-size: 25px !important;
+        text-align: left !important;
+      }
+
+      body.tablet-device.portrait .diaporama-bottom-text {
+        text-align: left !important;
+      }
+
+      body.tablet-device.portrait .diaporama-scroll-up-2,
+      body.tablet-device.portrait .diaporama-longtext-up {
+        text-align: left !important;
+      }
+
+      /* Portrait mode: Use CSS order to arrange vertical flow correctly */
+      body.tablet-device.portrait .diaporama-right-column {
+        display: contents !important; /* Collapse wrapper so children become direct flex items */
+      }
+
+      body.tablet-device.portrait .diaporama-scroll-up-1 {
+        order: 1; /* SubId1 + TopCorner */
+      }
+
+      body.tablet-device.portrait .diaporama-scroll-up-2 {
+        order: 2; /* Long text Up - above image */
+      }
+
+      body.tablet-device.portrait .diaporama-image-wrapper {
+        order: 3; /* Image */
+      }
+
+      body.tablet-device.portrait .diaporama-longtext-down-wrapper {
+        order: 4; /* Long text Down (caption) */
+      }
+
+      body.tablet-device.portrait .diaporama-scroll-down-1 {
+        order: 5; /* Bottom */
+      }
+
+      body.tablet-device.portrait .diaporama-scroll-down-2 {
+        order: 6; /* SubId2 */
       }
 
       body.tablet-device.portrait .diaporama-field,
@@ -5683,8 +5769,51 @@ DETECTION SYSTEM (working correctly):
         font-size: 15.625px !important;
       }
 
+      html.github-pages body.mobile-device.portrait .diaporama-longtext-down-wrapper {
+        margin-bottom: 10px !important;
+      }
+
       html.github-pages body.mobile-device.portrait .diaporama-bottom {
         font-size: 12.5px !important;
+        text-align: left !important;
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-bottom-text {
+        text-align: left !important;
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-scroll-up-2,
+      html.github-pages body.mobile-device.portrait .diaporama-longtext-up {
+        text-align: left !important;
+      }
+
+      /* Portrait mode: Use CSS order to arrange vertical flow correctly */
+      html.github-pages body.mobile-device.portrait .diaporama-right-column {
+        display: contents !important; /* Collapse wrapper so children become direct flex items */
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-scroll-up-1 {
+        order: 1; /* SubId1 + TopCorner */
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-scroll-up-2 {
+        order: 2; /* Long text Up - above image */
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-image-wrapper {
+        order: 3; /* Image */
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-longtext-down-wrapper {
+        order: 4; /* Long text Down (caption) */
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-scroll-down-1 {
+        order: 5; /* Bottom */
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-scroll-down-2 {
+        order: 6; /* SubId2 */
       }
 
       html.github-pages body.mobile-device.portrait .diaporama-field,
@@ -5822,7 +5951,7 @@ DETECTION SYSTEM (working correctly):
     <!-- Loading Screen Overlay -->
     <div id="loadingScreen" class="loading-screen">
       <div class="loading-content">
-        <div id="loadingText" class="loading-text">Patience discipline young Padawan !</div>
+        <div id="loadingText" class="loading-text">Patience you must have, young Padawan !</div>
         <div class="loading-spinner-container">
           <div class="loading-spinner"></div>
         </div>
