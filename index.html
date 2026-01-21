@@ -1,4 +1,5 @@
 
+
 <!--
 ==================================================================================
 IMPORTANT: READ ME BEFORE EDITING ANYTHING ON THIS CODE
@@ -4895,6 +4896,7 @@ DETECTION SYSTEM (working correctly):
         width: 100%;
         padding: 10px;
         box-sizing: border-box;
+        margin-top: -10px !important; /* Override .grid margin-top to control diaporama gap */
         /* Ensure diaporama-view itself has height when combined with vertical/horizontal */
       }
 
@@ -4910,6 +4912,11 @@ DETECTION SYSTEM (working correctly):
         border-radius: 16px;
       }
 
+      /* Center compact items in vertical diaporama */
+      .diaporama-vertical:has(.diaporama-item.diaporama-compact) {
+        align-items: center;
+      }
+
       /* Horizontal style: single item view with natural flow */
       .diaporama-horizontal {
         position: relative;
@@ -4920,6 +4927,8 @@ DETECTION SYSTEM (working correctly):
         max-height: none;
         overflow: visible;
         border-radius: 16px;
+        /* Fill viewport height to enable swiping anywhere (mobile/tablet) */
+        min-height: calc(100vh - 100px);
       }
 
       /* Sections show full content - no internal scrolling */
@@ -4948,6 +4957,17 @@ DETECTION SYSTEM (working correctly):
         max-width: 100%;
         height: auto;
         max-height: none;
+      }
+
+      /* Center compact items horizontally */
+      .diaporama-horizontal:has(.diaporama-item.diaporama-compact) .diaporama-item-container,
+      .diaporama-vertical:has(.diaporama-item.diaporama-compact) .diaporama-item-container {
+        align-items: center;
+      }
+
+      /* Desktop: Ensure compact vertical diaporama items are centered */
+      body.desktop-device .diaporama-vertical:has(.diaporama-item.diaporama-compact) .diaporama-item-container {
+        align-items: center !important;
       }
 
       /* ==========================================================================
@@ -5017,6 +5037,38 @@ DETECTION SYSTEM (working correctly):
         height: auto;
         max-width: 100%;
         max-height: none;
+      }
+
+      /* Compact layout in landscape: when right column is empty (no Long text Up and no Bottom) */
+      /* Desktop and tablet landscape use auto margins for centering */
+      .diaporama-horizontal .diaporama-item.diaporama-compact,
+      .diaporama-vertical .diaporama-item.diaporama-compact {
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Make left column shrink to fit image in compact layout */
+      .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-left-column,
+      .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-left-column {
+        width: fit-content !important;
+        align-items: center; /* Center image and caption */
+      }
+
+      /* Make image wrapper shrink to actual image size in compact layout */
+      .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-image-wrapper,
+      .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-image-wrapper {
+        width: fit-content !important;
+      }
+
+      /* Constrain caption width to match image width in compact layout */
+      .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-longtext-down-wrapper,
+      .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-longtext-down-wrapper {
+        width: auto !important;
+        max-width: 100%;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       /* Vertical mode: items flow naturally with gap between them */
@@ -5090,7 +5142,7 @@ DETECTION SYSTEM (working correctly):
       }
 
       .diaporama-longtext-up {
-        font-size: 13px;
+        font-size: 19.5px; /* 1.5x larger (was 13px) */
         word-wrap: break-word;
         overflow-wrap: break-word;
       }
@@ -5140,7 +5192,7 @@ DETECTION SYSTEM (working correctly):
       }
 
       .diaporama-longtext-down {
-        font-size: 13px;
+        font-size: 19.5px; /* 1.5x larger (was 13px) */
         word-wrap: break-word;
         overflow-wrap: break-word;
         text-align: center;
@@ -5185,7 +5237,7 @@ DETECTION SYSTEM (working correctly):
       }
 
       .diaporama-bottom {
-        font-size: 11px; /* Smaller than Long text Up (13px) */
+        font-size: 16.5px; /* 1.5x larger (was 11px) */
         margin-top: 10px;
         word-wrap: break-word;
         overflow-wrap: break-word;
@@ -5264,10 +5316,10 @@ DETECTION SYSTEM (working correctly):
         flex-shrink: 1;
       }
 
-      /* Navigation buttons for horizontal mode */
+      /* Navigation buttons for horizontal mode - floating in middle of viewport */
       .diaporama-nav {
-        position: absolute;
-        top: 50%;
+        position: fixed; /* Fixed to viewport - stays in place when scrolling */
+        top: 50vh; /* Center vertically in viewport */
         transform: translateY(-50%);
         background: rgba(0, 0, 0, 0.5);
         color: white;
@@ -5277,10 +5329,11 @@ DETECTION SYSTEM (working correctly):
         border-radius: 50%;
         font-size: 20px;
         cursor: pointer;
-        z-index: 10;
+        z-index: 1000; /* High z-index to float above content */
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: background 0.2s ease;
       }
 
       .diaporama-nav:hover {
@@ -5350,6 +5403,14 @@ DETECTION SYSTEM (working correctly):
         font-size: 12px !important; /* Match Bottom font size */
       }
 
+      /* Compact layout: auto margins for centering in mobile landscape */
+      body.mobile-device.landscape .diaporama-horizontal .diaporama-item.diaporama-compact,
+      body.mobile-device.landscape .diaporama-vertical .diaporama-item.diaporama-compact {
+        width: fit-content !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
       /* Hide nav buttons on mobile/tablet - use swipe instead */
       body.mobile-device .diaporama-nav,
       body.tablet-device .diaporama-nav {
@@ -5406,15 +5467,31 @@ DETECTION SYSTEM (working correctly):
         gap: 20px !important;
       }
 
-      /* Horizontal mode: container with natural flow - no centering */
-      body.mobile-device .diaporama-horizontal .diaporama-item-container,
-      body.tablet-device .diaporama-horizontal .diaporama-item-container {
+      /* Horizontal mode: container with natural flow - PORTRAIT ONLY (landscape uses centering for compact) */
+      body.mobile-device.portrait .diaporama-horizontal .diaporama-item-container,
+      body.mobile-device.portrait .diaporama-vertical .diaporama-item-container,
+      body.tablet-device.portrait .diaporama-horizontal .diaporama-item-container,
+      body.tablet-device.portrait .diaporama-vertical .diaporama-item-container {
         display: flex !important;
         flex-direction: column !important;
         width: 100% !important;
         height: auto !important;
         max-width: 100% !important;
         max-height: none !important;
+      }
+
+      /* LANDSCAPE: Center compact items in vertical diaporama container */
+      body.mobile-device.landscape .diaporama-vertical:has(.diaporama-item.diaporama-compact),
+      body.tablet-device.landscape .diaporama-vertical:has(.diaporama-item.diaporama-compact) {
+        align-items: center !important;
+      }
+
+      /* LANDSCAPE: Center compact items horizontally (mobile and tablet) */
+      body.mobile-device.landscape .diaporama-horizontal:has(.diaporama-item.diaporama-compact) .diaporama-item-container,
+      body.mobile-device.landscape .diaporama-vertical:has(.diaporama-item.diaporama-compact) .diaporama-item-container,
+      body.tablet-device.landscape .diaporama-horizontal:has(.diaporama-item.diaporama-compact) .diaporama-item-container,
+      body.tablet-device.landscape .diaporama-vertical:has(.diaporama-item.diaporama-compact) .diaporama-item-container {
+        align-items: center !important;
       }
 
       /* ==================== 3. DIAPORAMA - TABLET LANDSCAPE ==================== */
@@ -5432,17 +5509,23 @@ DETECTION SYSTEM (working correctly):
       }
 
       body.tablet-device.landscape .diaporama-bottom {
-        font-size: 12px !important;
+        font-size: 18px !important; /* 1.5x larger (was 12px) */
       }
 
       body.tablet-device.landscape .diaporama-field,
       body.tablet-device.landscape .diaporama-field-label,
       body.tablet-device.landscape .diaporama-longtext-up {
-        font-size: 15px !important;
+        font-size: 22.5px !important; /* 1.5x larger (was 15px) */
       }
 
       body.tablet-device.landscape .diaporama-longtext-down {
-        font-size: 12px !important; /* Match Bottom font size */
+        font-size: 18px !important; /* 1.5x larger (was 12px) */
+      }
+
+      /* Ensure compact layout resizes on tablet landscape */
+      body.tablet-device.landscape .diaporama-horizontal .diaporama-item.diaporama-compact,
+      body.tablet-device.landscape .diaporama-vertical .diaporama-item.diaporama-compact {
+        width: fit-content !important;
       }
 
       /* ==================== NEW: DIAPORAMA - LANDSCAPE TWO-COLUMN LAYOUT (All Devices + Desktop) ====================
@@ -5483,6 +5566,19 @@ DETECTION SYSTEM (working correctly):
         overflow: hidden; /* Contain overflow so right column scrolls */
       }
 
+      /* CRITICAL FIX: Disable grid layout for compact items (no right column content)
+         This allows proper centering and natural resizing to image width */
+      body.mobile-device.landscape .diaporama-item.diaporama-compact,
+      body.tablet-device.landscape .diaporama-item.diaporama-compact,
+      body.desktop-device .diaporama-item.diaporama-compact {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: unset !important;
+        grid-template-rows: unset !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
       /* When no right column content exists, left column takes full width */
       body.mobile-device.landscape .diaporama-item:not(:has(.diaporama-scroll-up-2)):not(:has(.diaporama-scroll-down-1)),
       body.tablet-device.landscape .diaporama-item:not(:has(.diaporama-scroll-up-2)):not(:has(.diaporama-scroll-down-1)),
@@ -5490,8 +5586,10 @@ DETECTION SYSTEM (working correctly):
         grid-template-columns: 1fr;
       }
 
-      /* When no image (empty data-image-url), right content takes full width */
+      /* When no image (empty data-image-url), right content takes full width (all devices and orientations) */
+      body.mobile-device.portrait .diaporama-item:has(.diaporama-image-wrapper[data-image-url=""]),
       body.mobile-device.landscape .diaporama-item:has(.diaporama-image-wrapper[data-image-url=""]),
+      body.tablet-device.portrait .diaporama-item:has(.diaporama-image-wrapper[data-image-url=""]),
       body.tablet-device.landscape .diaporama-item:has(.diaporama-image-wrapper[data-image-url=""]),
       body.desktop-device .diaporama-item:has(.diaporama-image-wrapper[data-image-url=""]) {
         grid-template-columns: 1fr;
@@ -5517,6 +5615,15 @@ DETECTION SYSTEM (working correctly):
         min-height: 0; /* Allow flex children to shrink */
       }
 
+      /* For compact items, left-column uses display: contents (becomes transparent) */
+      body.mobile-device.landscape .diaporama-item.diaporama-compact .diaporama-left-column,
+      body.tablet-device.landscape .diaporama-item.diaporama-compact .diaporama-left-column,
+      body.desktop-device .diaporama-item.diaporama-compact .diaporama-left-column {
+        display: contents !important;
+        grid-column: unset !important;
+        grid-row: unset !important;
+      }
+
       /* When no right column, left column spans full width */
       body.mobile-device.landscape .diaporama-item:not(:has(.diaporama-scroll-up-2)):not(:has(.diaporama-scroll-down-1)) .diaporama-left-column,
       body.tablet-device.landscape .diaporama-item:not(:has(.diaporama-scroll-up-2)):not(:has(.diaporama-scroll-down-1)) .diaporama-left-column,
@@ -5533,8 +5640,10 @@ DETECTION SYSTEM (working correctly):
         margin: 0 !important;
       }
 
-      /* When no image, hide the placeholder wrapper */
+      /* When no image, hide the placeholder wrapper (all devices and orientations) */
+      body.mobile-device.portrait .diaporama-image-wrapper[data-image-url=""],
       body.mobile-device.landscape .diaporama-image-wrapper[data-image-url=""],
+      body.tablet-device.portrait .diaporama-image-wrapper[data-image-url=""],
       body.tablet-device.landscape .diaporama-image-wrapper[data-image-url=""],
       body.desktop-device .diaporama-image-wrapper[data-image-url=""] {
         display: none !important;
@@ -5550,7 +5659,13 @@ DETECTION SYSTEM (working correctly):
       }
 
       body.desktop-device .diaporama-longtext-down {
-        font-size: 11px; /* Match Bottom font size */
+        font-size: 16.5px; /* 1.5x larger (was 11px) */
+      }
+
+      /* Ensure compact layout resizes on desktop */
+      body.desktop-device .diaporama-horizontal .diaporama-item.diaporama-compact,
+      body.desktop-device .diaporama-vertical .diaporama-item.diaporama-compact {
+        width: fit-content !important;
       }
 
       /* Right column wrapper - contains scroll-up-2 and scroll-down-1, scrolls when content exceeds left column height */
@@ -5572,8 +5687,10 @@ DETECTION SYSTEM (working correctly):
         max-height: 100%; /* Constrain to grid cell height so it doesn't exceed left column */
       }
 
-      /* When no image, right column spans full width and removes separator */
+      /* When no image, right column spans full width and removes separator (all devices and orientations) */
+      body.mobile-device.portrait .diaporama-item:has(.diaporama-image-wrapper[data-image-url=""]) .diaporama-right-column,
       body.mobile-device.landscape .diaporama-item:has(.diaporama-image-wrapper[data-image-url=""]) .diaporama-right-column,
+      body.tablet-device.portrait .diaporama-item:has(.diaporama-image-wrapper[data-image-url=""]) .diaporama-right-column,
       body.tablet-device.landscape .diaporama-item:has(.diaporama-image-wrapper[data-image-url=""]) .diaporama-right-column,
       body.desktop-device .diaporama-item:has(.diaporama-image-wrapper[data-image-url=""]) .diaporama-right-column {
         grid-column: 1 / -1;
@@ -5613,6 +5730,10 @@ DETECTION SYSTEM (working correctly):
       }
 
       /* ==================== 4. DIAPORAMA - MOBILE PORTRAIT (Apps Script) ==================== */
+      body.mobile-device.portrait .diaporama-view {
+        margin-top: -8px !important; /* Override .grid margin-top to control diaporama gap */
+      }
+
       body.mobile-device.portrait .diaporama-name {
         font-size: 37.5px !important;
       }
@@ -5685,6 +5806,31 @@ DETECTION SYSTEM (working correctly):
         font-size: 25px !important;
       }
 
+      /* Mobile Portrait: Disable compact layout - all items must be 100% width */
+      body.mobile-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact,
+      body.mobile-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+
+      body.mobile-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-left-column,
+      body.mobile-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-left-column {
+        width: 100% !important;
+        align-items: stretch !important;
+      }
+
+      body.mobile-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-image-wrapper,
+      body.mobile-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-image-wrapper {
+        width: 100% !important;
+      }
+
+      body.mobile-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-longtext-down-wrapper,
+      body.mobile-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-longtext-down-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
       /* ==================== 2. DIAPORAMA - TABLET PORTRAIT ==================== */
       body.tablet-device.portrait .diaporama-name {
         font-size: 30px !important;
@@ -5700,7 +5846,7 @@ DETECTION SYSTEM (working correctly):
       }
 
       body.tablet-device.portrait .diaporama-bottom {
-        font-size: 25px !important;
+        font-size: 37.5px !important; /* 1.5x larger (was 25px) */
         text-align: left !important;
       }
 
@@ -5746,7 +5892,7 @@ DETECTION SYSTEM (working correctly):
       body.tablet-device.portrait .diaporama-field-label,
       body.tablet-device.portrait .diaporama-longtext-up,
       body.tablet-device.portrait .diaporama-longtext-down {
-        font-size: 22px !important;
+        font-size: 33px !important; /* 1.5x larger (was 22px) */
       }
 
       body.tablet-device.portrait .diaporama-link-pill {
@@ -5758,7 +5904,36 @@ DETECTION SYSTEM (working correctly):
         font-size: 20px !important;
       }
 
+      /* Tablet Portrait: Disable compact layout - all items must be 100% width */
+      body.tablet-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact,
+      body.tablet-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+
+      body.tablet-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-left-column,
+      body.tablet-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-left-column {
+        width: 100% !important;
+        align-items: stretch !important;
+      }
+
+      body.tablet-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-image-wrapper,
+      body.tablet-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-image-wrapper {
+        width: 100% !important;
+      }
+
+      body.tablet-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-longtext-down-wrapper,
+      body.tablet-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-longtext-down-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
       /* ==================== 5. DIAPORAMA - GITHUB PAGES MOBILE PORTRAIT (50% scaled) ==================== */
+      html.github-pages body.mobile-device.portrait .diaporama-view {
+        margin-top: -14px !important; /* Override .grid margin-top to control diaporama gap */
+      }
+
       html.github-pages body.mobile-device.portrait .diaporama-name {
         font-size: 18.75px !important;
       }
@@ -5892,6 +6067,31 @@ DETECTION SYSTEM (working correctly):
         margin-bottom: 4px !important;
       }
 
+      /* GitHub Pages Mobile Portrait: Disable compact layout - all items must be 100% width */
+      html.github-pages body.mobile-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact,
+      html.github-pages body.mobile-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-left-column,
+      html.github-pages body.mobile-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-left-column {
+        width: 100% !important;
+        align-items: stretch !important;
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-image-wrapper,
+      html.github-pages body.mobile-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-image-wrapper {
+        width: 100% !important;
+      }
+
+      html.github-pages body.mobile-device.portrait .diaporama-vertical .diaporama-item.diaporama-compact .diaporama-longtext-down-wrapper,
+      html.github-pages body.mobile-device.portrait .diaporama-horizontal .diaporama-item.diaporama-compact .diaporama-longtext-down-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
       /* Mobile/Tablet LANDSCAPE: Natural document flow - page scrolls if content exceeds viewport */
       body.mobile-device.landscape .diaporama-vertical,
       body.mobile-device.landscape .diaporama-horizontal,
@@ -5940,7 +6140,7 @@ DETECTION SYSTEM (working correctly):
     <!-- Loading Screen Overlay -->
     <div id="loadingScreen" class="loading-screen">
       <div class="loading-content">
-        <div id="loadingText" class="loading-text">Patience you must have, young Padawan !</div>
+        <div id="loadingText" class="loading-text">Loading !</div>
         <div class="loading-spinner-container">
           <div class="loading-spinner"></div>
         </div>
@@ -8427,6 +8627,13 @@ DETECTION SYSTEM (working correctly):
         }
 
         // === RIGHT COLUMN WRAPPER (for landscape layout - contains scroll-up-2 and scroll-down-1) ===
+        // Check if right column is empty (both Long text Up and Bottom are empty) for compact layout
+        const isCompactLayout = !longTextUpHtml && !bottomHtml;
+        if (isCompactLayout) {
+          // Add compact class for narrower layout in landscape orientation
+          html = html.replace('<div class="diaporama-item"', '<div class="diaporama-item diaporama-compact"');
+        }
+
         // Only create wrapper if there's right column content
         if (longTextUpHtml || bottomHtml) {
           html += '<div class="diaporama-right-column">';
@@ -9923,6 +10130,13 @@ DETECTION SYSTEM (working correctly):
         }
 
         // === RIGHT COLUMN WRAPPER (for landscape layout - contains scroll-up-2 and scroll-down-1) ===
+        // Check if right column is empty (both Long text Up and Bottom are empty) for compact layout
+        const isCompactLayout = !longTextUpHtml && !bottomHtml;
+        if (isCompactLayout) {
+          // Add compact class for narrower layout in landscape orientation
+          html = html.replace('<div class="diaporama-item"', '<div class="diaporama-item diaporama-compact"');
+        }
+
         // Only create wrapper if there's right column content
         if (longTextUpHtml || bottomHtml) {
           html += '<div class="diaporama-right-column">';
