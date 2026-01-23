@@ -1,4 +1,5 @@
 
+
 <!--
 ==================================================================================
 IMPORTANT: READ ME BEFORE EDITING ANYTHING ON THIS CODE
@@ -6139,7 +6140,7 @@ DETECTION SYSTEM (working correctly):
     <!-- Loading Screen Overlay -->
     <div id="loadingScreen" class="loading-screen">
       <div class="loading-content">
-        <div id="loadingText" class="loading-text">Patience you must have, young Padawan !</div>
+        <div id="loadingText" class="loading-text">Loading !</div>
         <div class="loading-spinner-container">
           <div class="loading-spinner"></div>
         </div>
@@ -11302,6 +11303,9 @@ DETECTION SYSTEM (working correctly):
         const grid = document.getElementById("gridView");
         det.style.display = "block";
         grid.innerHTML = "";
+
+        // Remove all view-specific classes from grid when entering detail view
+        grid.classList.remove('grid', 'list-view', 'table-view', 'slide-view', 'slide-vertical', 'slide-horizontal', 'grid-rectangle');
 
         // Reset table-specific header widths when entering detail view
         if (typeof resetTableWidths === 'function') {
