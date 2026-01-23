@@ -1,5 +1,4 @@
 
-
 <!--
 ==================================================================================
 IMPORTANT: READ ME BEFORE EDITING ANYTHING ON THIS CODE
@@ -6140,7 +6139,7 @@ DETECTION SYSTEM (working correctly):
     <!-- Loading Screen Overlay -->
     <div id="loadingScreen" class="loading-screen">
       <div class="loading-content">
-        <div id="loadingText" class="loading-text">Patience you must have, young Padawan !</div>
+        <div id="loadingText" class="loading-text">Loading !</div>
         <div class="loading-spinner-container">
           <div class="loading-spinner"></div>
         </div>
@@ -7157,8 +7156,19 @@ DETECTION SYSTEM (working correctly):
         };
 
         // Check if element is visible via computed style (for elements without inline style)
+        // IMPORTANT: Check inline style FIRST for iOS Safari compatibility
+        // iOS Safari has async style recalculation, so getComputedStyle() may not reflect
+        // recent inline style changes immediately. Checking inline style first ensures
+        // visibility updates work correctly on real iPhone devices.
         const isVisibleComputed = (el) => {
           if (!el) return false;
+
+          // First check inline style (synchronous, immediate)
+          const inlineDisplay = el.style.display;
+          if (inlineDisplay === 'none') return false;
+          if (inlineDisplay && inlineDisplay !== 'none') return true;
+
+          // Fall back to computed style (may be stale on iOS)
           const computed = window.getComputedStyle(el);
           return computed.display !== 'none';
         };
